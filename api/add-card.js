@@ -6,17 +6,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, desc } = req.body;
+    const { name, desc, due } = req.body;
+    
+    const cardData = {
+      name,
+      desc: desc || '',
+      idList: process.env.TRELLO_TODAY_LIST_ID,
+      key: process.env.TRELLO_API_KEY,
+      token: process.env.TRELLO_TOKEN
+    };
+    
+    if (due) {
+      cardData.due = new Date(due).toISOString();
+    }
     
     const response = await axios.post(
       `https://api.trello.com/1/cards`,
-      {
-        name,
-        desc: desc || '',
-        idList: process.env.TRELLO_TODAY_LIST_ID,
-        key: process.env.TRELLO_API_KEY,
-        token: process.env.TRELLO_TOKEN
-      }
+      cardData
     );
     
     res.json({
