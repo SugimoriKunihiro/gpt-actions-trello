@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  title: Trello GPT Actions API
+  version: 1.0.0
+
+servers:
+  - url: https://gpt-actions-trello.vercel.app
+
+paths:
+  /api/add-card:
+    post:
+      operationId: addCardToToday
+      x-openai-isConsequential: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  cardId:
+                    type: string
+                  url:
+                    type: string
