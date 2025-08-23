@@ -22,6 +22,10 @@ paths:
                   type: string
                 desc:
                   type: string
+                due:
+                  type: string
+                  format: date-time
+                  description: "期限日時 (ISO 8601形式: YYYY-MM-DDTHH:mm:ssZ)"
               required:
                 - name
       responses:
@@ -40,3 +44,39 @@ paths:
                     type: string
                   url:
                     type: string
+  
+  /api/get-cards:
+    get:
+      operationId: getTodayCards
+      x-openai-isConsequential: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  cards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        description:
+                          type: string
+                        due:
+                          type: string
+                          format: date-time
+                        lastActivity:
+                          type: string
+                          format: date-time
+                        url:
+                          type: string
